@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Hero} from './hero';
+import {HEROES} from './mock-heroes';
 
 @Component({
   selector: 'app-heroes',
@@ -8,16 +9,50 @@ import {Hero} from './hero';
 })
 export class HeroesComponent implements OnInit {
 
-    hero: Hero = {
-        id: 1,
-        name: 'Windstorm'
-    };
-
-    st                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          = 'string';
+    heroes: Hero[] = HEROES;
+    selectedHero: Hero;
 
     constructor() { }
 
     ngOnInit() {
     }
 
+    onSelect(hero: Hero): void {
+        this.selectedHero = clone(hero);
+    }
+
+    isEqualHeroes(hero: Hero, selectedHero: Hero): boolean {
+        if (!hero || !selectedHero) {
+            return false;
+        }
+
+        const aProps = Object.getOwnPropertyNames(hero);
+        const bProps = Object.getOwnPropertyNames(selectedHero);
+
+        if (aProps.length !== bProps.length) {
+            return false;
+        }
+
+        for (let i = 0; i < aProps.length; i++) {
+            const propName = aProps[i];
+
+            if (hero[propName] !== selectedHero[propName]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
+
+function clone(obj) {
+    if (null == obj || 'object' !== typeof obj) { return obj; }
+    const copy = obj.constructor();
+    for (const attr in obj) {
+        if (obj.hasOwnProperty(attr)) { copy[attr] = obj[attr]; }
+    }
+    return copy;
+}
+
+
